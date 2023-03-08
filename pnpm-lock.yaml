@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@sveltejs/adapter-auto': ^2.0.0
   '@sveltejs/kit': ^1.5.0
+  '@tanstack/svelte-query': ^4.26.1
   '@trpc/client': ^10.14.1
   '@trpc/server': ^10.14.1
   '@typescript-eslint/eslint-plugin': ^5.45.0
@@ -19,6 +20,7 @@ specifiers:
   svelte: ^3.54.0
   svelte-check: ^3.0.1
   tailwindcss: ^3.2.7
+  trpc-svelte-query-adapter: ^2.0.2
   trpc-sveltekit: ^3.4.2
   tslib: ^2.4.1
   typescript: ^4.9.3
@@ -26,13 +28,15 @@ specifiers:
   vitest: ^0.25.3
 
 dependencies:
+  '@tanstack/svelte-query': 4.26.1_svelte@3.55.1
   '@trpc/client': 10.14.1_@trpc+server@10.14.1
-  '@trpc/server': 10.14.1
+  trpc-svelte-query-adapter: 2.0.2
   trpc-sveltekit: 3.4.2
 
 devDependencies:
   '@sveltejs/adapter-auto': 2.0.0_@sveltejs+kit@1.10.0
   '@sveltejs/kit': 1.10.0_svelte@3.55.1+vite@4.1.4
+  '@trpc/server': 10.14.1
   '@typescript-eslint/eslint-plugin': 5.54.1_mlk7dnz565t663n4razh6a6v6i
   '@typescript-eslint/parser': 5.54.1_ycpbpc6yetojsgtrx3mwntkhsu
   autoprefixer: 10.4.13_postcss@8.4.21
@@ -391,6 +395,19 @@ packages:
       - supports-color
     dev: true
 
+  /@tanstack/query-core/4.26.1:
+    resolution: {integrity: sha512-Zrx2pVQUP4ndnsu6+K/m8zerXSVY8QM+YSbxA1/jbBY21GeCd5oKfYl92oXPK0hPEUtoNuunIdiq0ZMqLos+Zg==}
+    dev: false
+
+  /@tanstack/svelte-query/4.26.1_svelte@3.55.1:
+    resolution: {integrity: sha512-5w51/QUw8lZZ99wtCk+6gze3fBws6JTSrMAxb3bM0o6fdDCUuTXl4LTv41ZCPuhbTnzzlUNKzGPcJDiQ1fSxRQ==}
+    peerDependencies:
+      svelte: ^3.54.0
+    dependencies:
+      '@tanstack/query-core': 4.26.1
+      svelte: 3.55.1
+    dev: false
+
   /@trpc/client/10.14.1_@trpc+server@10.14.1:
     resolution: {integrity: sha512-cmaRWpDV+uVuyIeaJ8zMiuOzkQlZc9QaArQwvSnCfyYRkFUhWffKVnjZOT88/qAjgJzeYLwdM/I69+ydSmjJQQ==}
     peerDependencies:
@@ -401,7 +418,6 @@ packages:
 
   /@trpc/server/10.14.1:
     resolution: {integrity: sha512-+xF2j4PITHI2+At7oDnu7clbvG7cn+lZQLJKrIKfJKssAwq8XQ7x39QF4CUd1Ix0TbjSrLwFoCj2lx9jbaSYnQ==}
-    dev: false
 
   /@types/chai-subset/1.3.3:
     resolution: {integrity: sha512-frBecisrNGz+F4T6bcc+NLeolfiojh5FxW2klu669+8BARtyQv2C/GkNW6FUodVe4BroGMP/wER/YDGc7rEllw==}
@@ -1737,6 +1753,10 @@ packages:
     hasBin: true
     dev: true
 
+  /proxy-deep/3.1.1:
+    resolution: {integrity: sha512-kppbvLUNJ4IOMZds9/4gz/rtT5OFiesy3XosLsgMKlF3vb6GA5Y3ptyDlzKLcOcUBW+zaY+RiMINTsgE+O6e+Q==}
+    dev: false
+
   /punycode/2.3.0:
     resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
     engines: {node: '>=6'}
@@ -2030,7 +2050,6 @@ packages:
   /svelte/3.55.1:
     resolution: {integrity: sha512-S+87/P0Ve67HxKkEV23iCdAh/SX1xiSfjF1HOglno/YTbSTW7RniICMCofWGdJJbdjw3S+0PfFb1JtGfTXE0oQ==}
     engines: {node: '>= 8'}
-    dev: true
 
   /tailwindcss/3.2.7_postcss@8.4.21:
     resolution: {integrity: sha512-B6DLqJzc21x7wntlH/GsZwEXTBttVSl1FtCzC8WP4oBc/NKef7kaax5jeihkkCEWc831/5NDJ9gRNDK6NEioQQ==}
@@ -2102,6 +2121,16 @@ packages:
     resolution: {integrity: sha512-eM+pCBxXO/njtF7vdFsHuqb+ElbxqtI4r5EAvk6grfAFyJ6IvWlSkfZ5T9ozC6xWw3Fj1fGoSmrl0gUs46JVIw==}
     engines: {node: '>=6'}
     dev: true
+
+  /trpc-svelte-query-adapter/2.0.2:
+    resolution: {integrity: sha512-ST+lLYJ/mvbGu8VXLSDWG4DEIwODwKJUhDiojR0wwQHT00+RNC6yCAJWXTj+jR+bDiXKf86zI+FE8lUh42sGsQ==}
+    dependencies:
+      '@tanstack/svelte-query': 4.26.1_svelte@3.55.1
+      '@trpc/client': 10.14.1_@trpc+server@10.14.1
+      '@trpc/server': 10.14.1
+      proxy-deep: 3.1.1
+      svelte: 3.55.1
+    dev: false
 
   /trpc-sveltekit/3.4.2:
     resolution: {integrity: sha512-kqqRLzUckxcv/6RFMBd9qM1KtfvCF2MVicYRppIurE0ZvRn0fta/KwI/oXjhWdDV43dslvfdvd7BQP3ND8Tg5A==}

@@ -15,6 +15,7 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/kit": "^1.5.0",
+    "@trpc/server": "^10.14.1",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
     "autoprefixer": "^10.4.13",
@@ -36,8 +37,9 @@
   },
   "type": "module",
   "dependencies": {
+    "@tanstack/svelte-query": "^4.26.1",
     "@trpc/client": "^10.14.1",
-    "@trpc/server": "^10.14.1",
+    "trpc-svelte-query-adapter": "^2.0.2",
     "trpc-sveltekit": "^3.4.2"
   }
 }
