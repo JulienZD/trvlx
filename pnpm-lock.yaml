@@ -23,6 +23,7 @@ specifiers:
   prettier-plugin-svelte: ^2.8.1
   prettier-plugin-tailwindcss: ^0.2.4
   prisma: ^4.11.0
+  superjson: ^1.12.2
   svelte: ^3.54.0
   svelte-check: ^3.0.1
   tailwindcss: ^3.2.7
@@ -61,6 +62,7 @@ devDependencies:
   prettier-plugin-svelte: 2.9.0_jrsxveqmsx2uadbqiuq74wlc4u
   prettier-plugin-tailwindcss: 0.2.4_yjdjpc7im5hvpskij45owfsns4
   prisma: 4.11.0
+  superjson: 1.12.2
   svelte: 3.55.1
   svelte-check: 3.1.0_pehl75e5jsy22vp33udjja4soi
   tailwindcss: 3.2.7_postcss@8.4.21
@@ -866,6 +868,13 @@ packages:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
 
+  /copy-anything/3.0.3:
+    resolution: {integrity: sha512-fpW2W/BqEzqPp29QS+MwwfisHCQZtiduTe/m8idFo0xbti9fIZ2WVhAsCv4ggFVH3AgCkVdpoOCtQC6gBrdhjw==}
+    engines: {node: '>=12.13'}
+    dependencies:
+      is-what: 4.1.8
+    dev: true
+
   /cross-spawn/7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
@@ -1387,6 +1396,11 @@ packages:
   /is-path-inside/3.0.3:
     resolution: {integrity: sha512-Fd4gABb+ycGAmKou8eMftCupSir5lRxqf4aD/vd0cD2qc4HL07OjCeuHMr8Ro4CoMaeCKDB0/ECBOVWjTwUvPQ==}
     engines: {node: '>=8'}
+    dev: true
+
+  /is-what/4.1.8:
+    resolution: {integrity: sha512-yq8gMao5upkPoGEU9LsB2P+K3Kt8Q3fQFCGyNCWOAnJAMzEXVV9drYb0TXr42TTliLLhKIBvulgAXgtLLnwzGA==}
+    engines: {node: '>=12.13'}
     dev: true
 
   /isexe/2.0.0:
@@ -2029,6 +2043,13 @@ packages:
     resolution: {integrity: sha512-QZTsipNpa2Ppr6v1AmJHESqJ3Uz247MUS0OjrnnZjFAvEoWqxuyFuXn2xLgMtRnijJShAa1HL0gtJyUs7u7n3Q==}
     dependencies:
       acorn: 8.8.2
+    dev: true
+
+  /superjson/1.12.2:
+    resolution: {integrity: sha512-ugvUo9/WmvWOjstornQhsN/sR9mnGtWGYeTxFuqLb4AiT4QdUavjGFRALCPKWWnAiUJ4HTpytj5e0t5HoMRkXg==}
+    engines: {node: '>=10'}
+    dependencies:
+      copy-anything: 3.0.3
     dev: true
 
   /supports-color/7.2.0:
