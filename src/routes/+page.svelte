@@ -1,7 +1,9 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { trpc } from '$lib/trpc/client';
+  import type { PageData } from './$types';
 
+  export let data: PageData;
   let name = '';
 
   // This gets run without any debounce
@@ -13,6 +15,9 @@
       enabled: !!name,
     }
   );
+
+  const queries = data.queries();
+  const foo = data.foo();
 </script>
 
 <div class="flex flex-col max-w-sm">
@@ -30,4 +35,23 @@
 
 {#if $hello.isError}
   <p>Failed to load data in<br /><code>+page.svelte</code></p>
+{/if}
+
+{#each $queries as query}
+  {#if query.isLoading}
+    Loading...
+  {:else if query.isError}
+    {query.error.message}
+  {:else if query.data}
+    {query.data}
+  {/if}
+  <br />
+{/each}
+
+{#if $foo.isLoading}
+  Loading...
+{:else if $foo.isError}
+  {$foo.error.message}
+{:else if $foo.data}
+  {$foo.data}
 {/if}

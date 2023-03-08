@@ -1,11 +1,12 @@
-<script>
-  import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
+<script lang="ts">
+  import { QueryClientProvider } from '@tanstack/svelte-query';
+  import type { LayoutData } from './$types';
   import '../app.css';
 
-  const queryClient = new QueryClient();
+  export let data: LayoutData;
 </script>
 
-<QueryClientProvider client={queryClient}>
+<QueryClientProvider client={data.queryClient}>
   <main class="container px-4">
     <slot />
   </main>
