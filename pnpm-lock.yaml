@@ -3,6 +3,8 @@ lockfileVersion: 5.4
 specifiers:
   '@sveltejs/adapter-auto': ^2.0.0
   '@sveltejs/kit': ^1.5.0
+  '@trpc/client': ^10.14.1
+  '@trpc/server': ^10.14.1
   '@typescript-eslint/eslint-plugin': ^5.45.0
   '@typescript-eslint/parser': ^5.45.0
   autoprefixer: ^10.4.13
@@ -17,10 +19,16 @@ specifiers:
   svelte: ^3.54.0
   svelte-check: ^3.0.1
   tailwindcss: ^3.2.7
+  trpc-sveltekit: ^3.4.2
   tslib: ^2.4.1
   typescript: ^4.9.3
   vite: ^4.0.0
   vitest: ^0.25.3
+
+dependencies:
+  '@trpc/client': 10.14.1_@trpc+server@10.14.1
+  '@trpc/server': 10.14.1
+  trpc-sveltekit: 3.4.2
 
 devDependencies:
   '@sveltejs/adapter-auto': 2.0.0_@sveltejs+kit@1.10.0
@@ -382,6 +390,18 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@trpc/client/10.14.1_@trpc+server@10.14.1:
+    resolution: {integrity: sha512-cmaRWpDV+uVuyIeaJ8zMiuOzkQlZc9QaArQwvSnCfyYRkFUhWffKVnjZOT88/qAjgJzeYLwdM/I69+ydSmjJQQ==}
+    peerDependencies:
+      '@trpc/server': 10.14.1
+    dependencies:
+      '@trpc/server': 10.14.1
+    dev: false
+
+  /@trpc/server/10.14.1:
+    resolution: {integrity: sha512-+xF2j4PITHI2+At7oDnu7clbvG7cn+lZQLJKrIKfJKssAwq8XQ7x39QF4CUd1Ix0TbjSrLwFoCj2lx9jbaSYnQ==}
+    dev: false
 
   /@types/chai-subset/1.3.3:
     resolution: {integrity: sha512-frBecisrNGz+F4T6bcc+NLeolfiojh5FxW2klu669+8BARtyQv2C/GkNW6FUodVe4BroGMP/wER/YDGc7rEllw==}
@@ -2082,6 +2102,17 @@ packages:
     resolution: {integrity: sha512-eM+pCBxXO/njtF7vdFsHuqb+ElbxqtI4r5EAvk6grfAFyJ6IvWlSkfZ5T9ozC6xWw3Fj1fGoSmrl0gUs46JVIw==}
     engines: {node: '>=6'}
     dev: true
+
+  /trpc-sveltekit/3.4.2:
+    resolution: {integrity: sha512-kqqRLzUckxcv/6RFMBd9qM1KtfvCF2MVicYRppIurE0ZvRn0fta/KwI/oXjhWdDV43dslvfdvd7BQP3ND8Tg5A==}
+    peerDependencies:
+      '@sveltejs/adapter-node': ^1.2.0
+      '@types/ws': ^8.5.4
+      ws: ^8.12.0
+    dependencies:
+      '@trpc/client': 10.14.1_@trpc+server@10.14.1
+      '@trpc/server': 10.14.1
+    dev: false
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
