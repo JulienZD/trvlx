@@ -2,6 +2,7 @@
   import { page } from '$app/stores';
   import { trpc } from '$lib/trpc/client';
   import type { PageData } from './$types';
+  import { signIn, signOut } from '@auth/sveltekit/client';
 
   export let data: PageData;
   let name = '';
@@ -55,3 +56,17 @@
 {:else if $foo.data}
   {$foo.data}
 {/if}
+
+<h1>SvelteKit Auth Example</h1>
+<p>
+  {#if $page.data.session}
+    <span>
+      <small>Signed in as</small><br />
+      <strong>{$page.data.session.user?.name ?? 'User'}</strong>
+    </span>
+    <button on:click={() => signOut()} class="button">Sign out</button>
+  {:else}
+    <span>You are not signed in</span>
+    <button on:click={() => signIn('discord')}>Sign In with Discord</button>
+  {/if}
+</p>

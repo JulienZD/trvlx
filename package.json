@@ -38,6 +38,8 @@
   },
   "type": "module",
   "dependencies": {
+    "@auth/core": "^0.5.1",
+    "@auth/sveltekit": "^0.3.0",
     "@tanstack/svelte-query": "^4.26.1",
     "@trpc/client": "^10.14.1",
     "trpc-svelte-query-adapter": "^2.0.2",
