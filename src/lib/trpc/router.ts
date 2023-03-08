@@ -1,16 +1,12 @@
-import type { Context } from '$lib/trpc/context';
+import type { Context } from './context';
 import { initTRPC, type inferRouterInputs, type inferRouterOutputs } from '@trpc/server';
+import type { AppRouter } from '$lib/server/trpc/router/_app';
 
 export const t = initTRPC.context<Context>().create();
 
-export const router = t.router({
-  greeting: t.procedure.query(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 500)); // 👈 simulate an expensive operation
-    return `Hello tRPC v10 @ ${new Date().toLocaleTimeString()}`;
-  }),
-});
+export const router = t.router;
 
-export type Router = typeof router;
+export const publicProcedure = t.procedure;
 
-export type RouterInputs = inferRouterInputs<Router>;
-export type RouterOutputs = inferRouterOutputs<Router>;
+export type RouterInputs = inferRouterInputs<AppRouter>;
+export type RouterOutputs = inferRouterOutputs<AppRouter>;

@@ -6,5 +6,7 @@
 </script>
 
 <QueryClientProvider client={queryClient}>
-  <slot />
+  <main class="container px-4">
+    <slot />
+  </main>
 </QueryClientProvider>
