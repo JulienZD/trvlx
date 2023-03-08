@@ -1,10 +1,11 @@
 import type { RequestEvent } from '@sveltejs/kit';
 import type { inferAsyncReturnType } from '@trpc/server';
+import { prisma } from '$lib/server/db/client';
 
 export const createContext = async (event: RequestEvent) => {
-  // console.log(event);
   return {
-    // context information
+    prisma,
+    session: await event.locals.getSession(),
   };
 };
 

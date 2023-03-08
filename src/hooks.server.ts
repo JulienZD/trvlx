@@ -32,6 +32,20 @@ export const handle = sequence(
       }),
     ],
     adapter,
+    callbacks: {
+      session({ session, user }) {
+        if (user) {
+          session.user = {
+            name: user.name as string,
+            email: user.email,
+            id: user.id,
+            image: user.image,
+          };
+        }
+
+        return session;
+      },
+    },
   }),
   createTRPCHandle({ router: appRouter, createContext })
 ) satisfies Handle;

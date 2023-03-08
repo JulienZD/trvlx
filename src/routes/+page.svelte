@@ -17,6 +17,8 @@
     }
   );
 
+  const secret = trpc($page).example.secret.createQuery();
+
   const queries = data.queries();
   const foo = data.foo();
 </script>
@@ -70,3 +72,9 @@
     <button on:click={() => signIn('discord')}>Sign In with Discord</button>
   {/if}
 </p>
+
+{#if $secret.isError}
+  <p>Secret failed: {$secret.error.message}</p>
+{:else if $secret.data}
+  <p>Secret message: {$secret.data}</p>
+{/if}

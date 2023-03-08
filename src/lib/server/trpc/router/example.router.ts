@@ -1,4 +1,4 @@
-import { publicProcedure, router } from '$lib/trpc/router';
+import { protectedProcedure, publicProcedure, router } from '$lib/trpc/router';
 import { z } from 'zod';
 
 export const exampleRouter = router({
@@ -11,4 +11,5 @@ export const exampleRouter = router({
     .query(({ input }) => {
       return `Hello ${input.name}!`;
     }),
+  secret: protectedProcedure.query(() => 'This is a secret!'),
 });
