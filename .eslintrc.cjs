@@ -27,7 +27,16 @@ module.exports = {
       },
     ],
     'prettier/prettier': ['error'],
-    'comma-dangle': ['error', 'always-multiline'],
+    'comma-dangle': [
+      'error',
+      {
+        functions: 'never',
+        arrays: 'always-multiline',
+        objects: 'always-multiline',
+        imports: 'always-multiline',
+        exports: 'always-multiline',
+      },
+    ],
     'func-style': [
       'error',
       'expression',
