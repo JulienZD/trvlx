@@ -2,10 +2,18 @@
   import { page } from '$app/stores';
   import { trpc } from '$lib/trpc/client';
   import { onMount } from 'svelte';
+  import { zCreateTrip } from '$lib/schemas/trip';
+
+  import { createForm } from 'felte';
+  import { validator } from '@felte/validator-zod';
+  import { extractFormErrors } from '$lib/util/form';
+  import ValidationMessage from '$lib/components/ValidationMessage.svelte';
 
   const client = trpc($page);
 
-  const mostRecentTrip = client.trips.mostRecent.createQuery();
+  const mostRecentTrip = client.trips.mostRecent.createQuery(undefined, {
+    refetchOnWindowFocus: false,
+  });
   const createTrip = client.trips.create.createMutation();
 
   let now = new Date(),
@@ -24,20 +32,44 @@
     dateString = [year, month, day].join('-');
   });
 
-  $: errors = Object.values($createTrip.error?.data?.zodError?.fieldErrors ?? {}).flatMap((x) => x);
-  const handleSubmit = (ev: SubmitEvent) => {
-    const formData = new FormData(ev.target as HTMLFormElement);
-    const data = Object.fromEntries(formData.entries());
-    $createTrip.mutate(data);
-  };
+  const {
+    form,
+    errors: formErrors,
+    data,
+    setFields,
+  } = createForm({
+    extend: validator({
+      schema: zCreateTrip,
+    }),
+    initialValues: {
+      date: dateString,
+      startKm: $mostRecentTrip?.data?.endKm || 0,
+      endKm: 0,
+      isPrivate: false,
+    },
+    onSubmit: (data) => $createTrip.mutate(data),
+  });
+
+  $: setFields((fields) => {
+    const latestStartKm = $mostRecentTrip?.data?.endKm || 0;
+    return {
+      ...fields,
+      date: dateString,
+      startKm: latestStartKm,
+      endKm: Math.max(fields.endKm || 0, latestStartKm + 1),
+    };
+  });
+
+  $: errors = extractFormErrors($createTrip, $formErrors);
 </script>
 
 <h2 class="mt-4 font-['Anton'] text-3xl">Nieuwe rit</h2>
 
-<form on:submit|preventDefault={handleSubmit} class="flex w-full flex-col justify-center gap-y-4 px-8">
+<form use:form class="flex w-full flex-col justify-center gap-y-4 px-8 text-black">
   <div class="flex flex-col ">
     <label for="date">Datum</label>
     <input class="rounded-sm border border-black" type="date" name="date" id="date" value={dateString} />
+    <ValidationMessage message={errors.date} />
   </div>
 
   <div class="flex flex-col font-['Solitreo'] text-xl">
@@ -49,9 +81,10 @@
       type="number"
       name="startKm"
       id="startKm"
-      value={$mostRecentTrip?.data?.endKm || 0}
     />
+    <ValidationMessage message={errors.startKm} />
   </div>
+
   <div class="flex flex-col font-['Dokdo'] text-3xl">
     <label for="endKm">Kilometerstand eind</label>
     <input
@@ -61,6 +94,7 @@
       name="endKm"
       id="endKm"
     />
+    <ValidationMessage message={errors.endKm} />
   </div>
 
   <label for="isPrivate" class="relative ml-16 inline-flex cursor-pointer items-center font-['Pangolin']">
@@ -76,18 +110,6 @@
     class="mt-8 h-12 rounded-sm border border-black pl-2 text-left font-['Odor_Mean_Chey'] text-2xl font-bold tracking-tight md:after:mx-14"
     class:bg-red-700={$createTrip.isError}>Toeveogen</button
   >
-  {#if $createTrip.isError}
-    <div class="mt-8 font-['Pangolin'] text-2xl">
-      Er ging iets mis!
-      {#if errors.length}
-        <ul>
-          {#each errors as error}
-            <li>{error}</li>
-          {/each}
-        </ul>
-      {/if}
-    </div>
-  {/if}
 </form>
 
 {#if $createTrip.isSuccess}
@@ -96,8 +118,4 @@
 
 <style lang="postcss">
   @import url('https://fonts.googleapis.com/css2?family=Anton&family=Ballet:opsz@16..72&family=Comic+Neue:wght@400;700&family=Dokdo&family=Odor+Mean+Chey&family=Pangolin&family=Solitreo&display=swap');
-
-  * {
-    @apply text-black;
-  }
 </style>
