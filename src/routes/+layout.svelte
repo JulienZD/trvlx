@@ -14,7 +14,7 @@
   <div class="container prose h-full py-4">
     <div class="flex h-full flex-col border border-black">
       <header class="flex w-full items-center justify-between pl-2 pr-4 align-middle">
-        <h1 class="mb-0 font-comicsans text-6xl">Koele Rittenregistratie App</h1>
+        <h1 class="mb-0 font-comicsans text-4xl md:text-6xl">Koele Rittenregistratie App</h1>
         {#if signedIn}
           <button on:click={() => signOut()} class="shrink-0 rounded border border-black px-2">Sign out</button>
         {/if}
