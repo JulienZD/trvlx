@@ -7,19 +7,19 @@
   const trips = client.trips.all.createQuery();
 </script>
 
-<h2 class="mt-4 font-['Anton'] text-3xl uppercase tracking-widest text-center">All mijn ritten</h2>
+<h2 class="mt-4 text-center font-['Anton'] text-3xl uppercase tracking-widest">All mijn ritten</h2>
 {#if $trips.data}
   <ul class="list-none">
     {#each $trips.data as trip}
-      <li class="border-b border-black border-dashed mr-4">
+      <li class="mr-4 border-b border-dashed border-black">
         <div class="not-prose">
-          <p class="mb-0 font-bold font-['Dokdo'] text-4xl tracking-wider">{trip.date.toDateString()}</p>
+          <p class="mb-0 font-['Dokdo'] text-4xl font-bold tracking-wider">{trip.date.toDateString()}</p>
           <p class="font-['Mynerve'] text-3xl">Start: {trip.startKm}km</p>
 
           <p class="font-['Mynerve'] text-3xl">Eind: {trip.endKm}km</p>
           {#if trip.isPrivate}
             <span
-              class="inline-flex items-center px-2.5 py-0.5 rounded-md border-4 text-lg italic underline font-bold border-gray-800 text-gray-800"
+              class="inline-flex items-center rounded-md border-4 border-gray-800 px-2.5 py-0.5 text-lg font-bold italic text-gray-800 underline"
             >
               Privé
             </span>
