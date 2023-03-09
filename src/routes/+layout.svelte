@@ -4,6 +4,7 @@
   import '../app.css';
   import { page } from '$app/stores';
   import { signIn, signOut } from '@auth/sveltekit/client';
+  import Arrow from '$lib/components/Arrow.svelte';
 
   export let data: LayoutData;
 
@@ -16,7 +17,13 @@
       <header class="flex w-full items-center justify-between pl-2 pr-4 align-middle">
         <h1 class="mb-0 font-comicsans text-4xl md:text-6xl">Koele Rittenregistratie App</h1>
         {#if signedIn}
-          <button on:click={() => signOut()} class="shrink-0 rounded border border-black px-2">Sign out</button>
+          {#if $page.route.id === '/'}
+            <button on:click={() => signOut()} class="shrink-0 rounded border border-black px-2">Sign out</button>
+          {:else}
+            <a href="/" class="shrink-0 px-2">
+              <Arrow />
+            </a>
+          {/if}
         {/if}
       </header>
       {#if signedIn}
