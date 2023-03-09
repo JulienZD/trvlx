@@ -10,7 +10,7 @@ export const extractFormErrors = <
   formErrors: TFormErrors = {} as TFormErrors
 ): Partial<Record<ErrorKey<TFormErrors, TMutation>, ErrorValue>> => {
   if (!mutation.isError || !mutation.error) {
-    return {};
+    return formErrors as Partial<Record<ErrorKey<TFormErrors, TMutation>, ErrorValue>>;
   }
 
   const errors = mutation?.error?.data?.zodError?.fieldErrors;
