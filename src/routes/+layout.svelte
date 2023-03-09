@@ -34,6 +34,7 @@
         <div class="flex flex-col items-center justify-center">
           <h2 class="font-comicsans">Sign in to get started</h2>
 
+          <img src="/trvlx.png" alt="" class="w-60 h-60" />
           <button
             on:click={() => signIn('discord')}
             class="rounded border border-black bg-[#7289DA] px-2 py-4 font-comicsans text-4xl font-bold text-black"
