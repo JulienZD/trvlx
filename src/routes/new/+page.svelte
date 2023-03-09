@@ -11,7 +11,9 @@
 
   const client = trpc($page);
 
-  const mostRecentTrip = client.trips.mostRecent.createQuery();
+  const mostRecentTrip = client.trips.mostRecent.createQuery(undefined, {
+    refetchOnWindowFocus: false,
+  });
   const createTrip = client.trips.create.createMutation();
 
   let now = new Date(),
