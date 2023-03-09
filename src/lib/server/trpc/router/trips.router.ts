@@ -56,4 +56,14 @@ export const tripsRouter = router({
 
     return latest ?? null;
   }),
+  all: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.trip.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+      orderBy: {
+        date: 'desc',
+      },
+    });
+  }),
 });
