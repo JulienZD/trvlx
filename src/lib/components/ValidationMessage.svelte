@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let message: string[] | null | undefined;
+  export let message: string | string[] | null | undefined;
 </script>
 
 {#if message}
