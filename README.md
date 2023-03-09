@@ -1,4 +1,9 @@
 # Trvlx
+A very basic app to track odometer readings.
+
+<img width="350" src="./.github/images/trvlx.png" />
+
+**Note**:  The UI was designed as a joke by my friend. It was implemented poorly on purpose. This was mostly built to play around with [tRPC](https://trpc.io) in SvelteKit, most notably the [Svelte Query](https://github.com/vishalbalaji/trpc-svelte-query-adapter) adapter.
 
 ## Developing
 
