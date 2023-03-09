@@ -23,14 +23,22 @@ export const tripsRouter = router({
 
     return latest ?? null;
   }),
-  all: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.trip.findMany({
+  all: protectedProcedure.query(async ({ ctx }) => {
+    const allTrips = await ctx.prisma.trip.findMany({
       where: {
         userId: ctx.session.user.id,
       },
       orderBy: {
         date: 'desc',
       },
+    });
+
+    // sort by date desc, then startKm desc
+    return allTrips.sort((a, b) => {
+      if (a.date.getTime() === b.date.getTime()) {
+        return b.startKm - a.startKm;
+      }
+      return a.date.getTime() > b.date.getTime() ? 1 : -1;
     });
   }),
 });
