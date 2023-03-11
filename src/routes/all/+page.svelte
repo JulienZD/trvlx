@@ -1,29 +1,46 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import TrashIcon from '$lib/components/TrashIcon.svelte';
   import { trpc } from '$lib/trpc/client';
 
   const client = trpc($page);
 
   const trips = client.trips.all.createQuery();
+  const deleteTrip = client.trips.delete.createMutation({
+    onSuccess: () => {
+      $trips.refetch();
+    },
+  });
+
+  const onDeleteTrip = (tripId: string) => {
+    $deleteTrip.mutate({ id: tripId });
+  };
 </script>
 
 <h2 class="mt-4 text-center font-['Anton'] text-3xl uppercase tracking-widest">All mijn ritten</h2>
-{#if $trips.data}
+{#if $trips.data?.length}
   <ul class="list-none">
-    {#each $trips.data as trip}
+    {#each $trips.data as trip (trip.id)}
       <li class="mr-4 border-b border-dashed border-black">
         <div class="not-prose">
           <p class="mb-0 font-['Dokdo'] text-4xl font-bold tracking-wider">{trip.date.toDateString()}</p>
-          <p class="font-['Mynerve'] text-3xl">Start: {trip.startKm}km</p>
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-['Mynerve'] text-3xl">Start: {trip.startKm}km</p>
 
-          <p class="font-['Mynerve'] text-3xl">Eind: {trip.endKm}km</p>
-          {#if trip.isPrivate}
-            <span
-              class="inline-flex items-center rounded-md border-4 border-gray-800 px-2.5 py-0.5 text-lg font-bold italic text-gray-800 underline"
-            >
-              Privé
-            </span>
-          {/if}
+              <p class="font-['Mynerve'] text-3xl">Eind: {trip.endKm}km</p>
+              {#if trip.isPrivate}
+                <span
+                  class="inline-flex items-center rounded-md border-4 border-gray-800 px-2.5 py-0.5 text-lg font-bold italic text-gray-800 underline"
+                >
+                  Privé
+                </span>
+              {/if}
+            </div>
+            <button on:click={() => onDeleteTrip(trip.id)}>
+              <TrashIcon />
+            </button>
+          </div>
         </div>
       </li>
     {/each}
