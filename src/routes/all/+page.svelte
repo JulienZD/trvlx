@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import ConfirmAction from '$lib/components/ConfirmAction.svelte';
   import TrashIcon from '$lib/components/TrashIcon.svelte';
   import { trpc } from '$lib/trpc/client';
 
@@ -37,9 +38,12 @@
                 </span>
               {/if}
             </div>
-            <button on:click={() => onDeleteTrip(trip.id)}>
+            <ConfirmAction
+              prompt="Are you sure you want to delete {trip.date.toDateString()}?"
+              action={() => onDeleteTrip(trip.id)}
+            >
               <TrashIcon />
-            </button>
+            </ConfirmAction>
           </div>
         </div>
       </li>
