@@ -1,15 +1,20 @@
 <script lang="ts">
-  import { QueryClientProvider } from '@tanstack/svelte-query';
-  import type { LayoutData } from './$types';
+  import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
+  import '@skeletonlabs/skeleton/styles/all.css';
   import '../app.css';
   import { page } from '$app/stores';
-  import { signIn, signOut } from '@auth/sveltekit/client';
   import Arrow from '$lib/components/Arrow.svelte';
+  import { signIn, signOut } from '@auth/sveltekit/client';
+  import { QueryClientProvider } from '@tanstack/svelte-query';
+  import { Modal } from '@skeletonlabs/skeleton';
+  import type { LayoutData } from './$types';
 
   export let data: LayoutData;
 
   $: signedIn = !!$page.data.session;
 </script>
+
+<Modal buttonNeutral="!text-black hover:variant-soft" buttonPositive="rounded-lg btn variant-ringed hover:variant-filled text-end" />
 
 <QueryClientProvider client={data.queryClient}>
   <div class="container prose h-full py-4">
@@ -46,7 +51,11 @@
   </div>
 </QueryClientProvider>
 
-<style>
+<style lang="postcss">
   /* Importing this in app.css doesn't work for some reason */
   @import url('https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&family=Comic+Neue:wght@400;700&display=swap');
+
+  :global(body) {
+    @apply !bg-white;
+  }
 </style>

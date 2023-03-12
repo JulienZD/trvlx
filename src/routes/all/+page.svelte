@@ -22,9 +22,10 @@
 {#if $trips.data?.length}
   <ul class="list-none">
     {#each $trips.data as trip (trip.id)}
+      {@const tripDate = trip.date.toLocaleDateString('nl', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}
       <li class="mr-4 border-b border-dashed border-black">
         <div class="not-prose">
-          <p class="mb-0 font-['Dokdo'] text-4xl font-bold tracking-wider">{trip.date.toDateString()}</p>
+          <p class="mb-0 font-['Dokdo'] text-4xl font-bold tracking-wider capitalize">{tripDate}</p>
           <div class="flex items-center justify-between">
             <div>
               <p class="font-['Mynerve'] text-3xl">Start: {trip.startKm}km</p>
@@ -38,10 +39,7 @@
                 </span>
               {/if}
             </div>
-            <ConfirmAction
-              prompt="Are you sure you want to delete {trip.date.toDateString()}?"
-              action={() => onDeleteTrip(trip.id)}
-            >
+            <ConfirmAction prompt="Wil je echt {tripDate} verwijderen?" action={() => onDeleteTrip(trip.id)}>
               <TrashIcon />
             </ConfirmAction>
           </div>
