@@ -6,7 +6,7 @@
   import Arrow from '$lib/components/Arrow.svelte';
   import { signIn, signOut } from '@auth/sveltekit/client';
   import { QueryClientProvider } from '@tanstack/svelte-query';
-  import { Modal } from '@skeletonlabs/skeleton';
+  import { Modal, Toast } from '@skeletonlabs/skeleton';
   import type { LayoutData } from './$types';
 
   export let data: LayoutData;
@@ -15,6 +15,7 @@
 </script>
 
 <Modal buttonNeutral="!text-black hover:variant-soft" buttonPositive="rounded-lg btn variant-ringed hover:variant-filled text-end" />
+<Toast />
 
 <QueryClientProvider client={data.queryClient}>
   <div class="container prose h-full py-4">

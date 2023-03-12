@@ -3,12 +3,19 @@
   import ConfirmAction from '$lib/components/ConfirmAction.svelte';
   import TrashIcon from '$lib/components/TrashIcon.svelte';
   import { trpc } from '$lib/trpc/client';
+  import { toastStore } from '@skeletonlabs/skeleton';
 
   const client = trpc($page);
 
   const trips = client.trips.all.createQuery();
   const deleteTrip = client.trips.delete.createMutation({
     onSuccess: () => {
+      toastStore.trigger({
+        message: 'Rit verwijderd 👌',
+        background: 'variant-outline bg-white ring-slate-300',
+        classes: "font-['Pangolin']",
+        timeout: 3500,
+      });
       $trips.refetch();
     },
   });
