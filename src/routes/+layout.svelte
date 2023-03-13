@@ -14,7 +14,10 @@
   $: signedIn = !!$page.data.session;
 </script>
 
-<Modal buttonNeutral="!text-black hover:variant-soft" buttonPositive="rounded-lg btn variant-ringed hover:variant-filled text-end" />
+<Modal
+  buttonNeutral="!text-black hover:variant-soft"
+  buttonPositive="rounded-lg btn variant-ringed hover:variant-filled text-end"
+/>
 <Toast />
 
 <QueryClientProvider client={data.queryClient}>
@@ -40,7 +43,7 @@
         <div class="flex flex-col items-center justify-center">
           <h2 class="font-comicsans">Sign in to get started</h2>
 
-          <img src="/trvlx.png" alt="" class="w-60 h-60" />
+          <img src="/trvlx.png" alt="" class="h-60 w-60" />
           <button
             on:click={() => signIn('discord')}
             class="rounded border border-black bg-[#7289DA] px-2 py-4 font-comicsans text-4xl font-bold text-black"
