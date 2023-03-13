@@ -2,10 +2,7 @@
 module.exports = {
   content: [
     './src/**/*.{html,js,svelte,ts}',
-    require('path').join(require.resolve(
-			'@skeletonlabs/skeleton'),
-			'../**/*.{html,js,svelte,ts}'
-		)
+    require('path').join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}'),
   ],
   theme: {
     container: {
@@ -17,8 +14,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'), 
-    ...require('@skeletonlabs/skeleton/tailwind/skeleton.cjs')(),
-  ],
+  plugins: [require('@tailwindcss/typography'), ...require('@skeletonlabs/skeleton/tailwind/skeleton.cjs')()],
 };

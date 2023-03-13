@@ -29,10 +29,15 @@
 {#if $trips.data?.length}
   <ul class="list-none">
     {#each $trips.data as trip (trip.id)}
-      {@const tripDate = trip.date.toLocaleDateString('nl', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}
+      {@const tripDate = trip.date.toLocaleDateString('nl', {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      })}
       <li class="mr-4 border-b border-dashed border-black">
         <div class="not-prose">
-          <p class="mb-0 font-['Dokdo'] text-4xl font-bold tracking-wider capitalize">{tripDate}</p>
+          <p class="mb-0 font-['Dokdo'] text-4xl font-bold capitalize tracking-wider">{tripDate}</p>
           <div class="flex items-center justify-between">
             <div>
               <p class="font-['Mynerve'] text-3xl">Start: {trip.startKm}km</p>
