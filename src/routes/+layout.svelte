@@ -16,9 +16,9 @@
 
 <Modal
   buttonNeutral="!text-black hover:variant-soft"
-  buttonPositive="rounded-lg btn variant-ringed hover:variant-filled text-end"
+  buttonPositive="rounded-lg btn bg-filled variant-ringed hover:variant-filled text-end"
 />
-<Toast />
+<Toast buttonDismissLabel="👌" buttonDismiss="btn-icon btn-icon-sm bg-transparent hover:variant-soft p-0.5" />
 
 <QueryClientProvider client={data.queryClient}>
   <div class="container prose h-full py-4">
