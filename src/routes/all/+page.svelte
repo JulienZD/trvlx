@@ -11,7 +11,7 @@
   const deleteTrip = client.trips.delete.createMutation({
     onSuccess: () => {
       toastStore.trigger({
-        message: 'Rit verwijderd 👌',
+        message: 'Rit verwijderd',
         background: 'variant-outline bg-white ring-slate-300',
         classes: "font-['Pangolin']",
         timeout: 3500,
