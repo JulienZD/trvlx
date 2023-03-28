@@ -32,3 +32,10 @@ export const zCreateTrip = z
   });
 
 export type CreateTrip = z.infer<typeof zCreateTrip>;
+
+export type TripCsv = {
+  date: string;
+  start: number;
+  end: number;
+  private: boolean;
+};
