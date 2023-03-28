@@ -27,17 +27,24 @@ export const tripsRouter = router({
     return ctx.prisma.trip.delete({ where: { id: input.id } });
   }),
   mostRecent: protectedProcedure.query(async ({ ctx }) => {
-    const [latest] = await ctx.prisma.trip.findMany({
+    const latestTrips = await ctx.prisma.trip.findMany({
       where: {
         userId: ctx.session.user.id,
       },
       orderBy: {
         date: 'desc',
       },
-      take: 1,
+      take: 5,
     });
 
-    return latest ?? null;
+    const [latestWithHighestStartKm] = latestTrips.sort((a, b) => {
+      if (a.date.getTime() === b.date.getTime()) {
+        return b.startKm - a.startKm;
+      }
+      return a.date.getTime() > b.date.getTime() ? -1 : 1;
+    });
+
+    return latestWithHighestStartKm ?? null;
   }),
   all: protectedProcedure.query(async ({ ctx }) => {
     const allTrips = await ctx.prisma.trip.findMany({
