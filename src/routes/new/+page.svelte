@@ -16,12 +16,16 @@
   });
   const createTrip = client.trips.create.createMutation();
 
+  const modeOrAvgDistance = client.trips.modeOrAvgDistance.createQuery();
+
   let now = new Date(),
     month,
     day,
     year;
 
   let dateString = '';
+
+  let hasSeenModeOrAvgUsageMessage = false;
 
   onMount(() => {
     (month = '' + (now.getMonth() + 1)), (day = '' + now.getDate()), (year = now.getFullYear());
@@ -35,8 +39,8 @@
   const {
     form,
     errors: formErrors,
-    data,
     setFields,
+    touched,
   } = createForm({
     extend: validator({
       schema: zCreateTrip,
@@ -44,7 +48,7 @@
     initialValues: {
       date: dateString,
       startKm: $mostRecentTrip?.data?.endKm || 0,
-      endKm: 0,
+      endKm: ($mostRecentTrip?.data?.endKm || 0) + ($modeOrAvgDistance.data || 1),
       isPrivate: false,
     },
     onSubmit: (data) => $createTrip.mutate(data),
@@ -52,15 +56,28 @@
 
   $: setFields((fields) => {
     const latestStartKm = $mostRecentTrip?.data?.endKm || 0;
+
     return {
       ...fields,
       date: dateString,
       startKm: latestStartKm,
-      endKm: Math.max(fields.endKm || 0, latestStartKm + 1),
+      endKm: Math.max(fields.endKm || 0, latestStartKm + ($modeOrAvgDistance.data || 1)),
     };
   });
 
   $: errors = extractFormErrors($createTrip, $formErrors);
+
+  $: {
+    // Recalculate endKm based on mode / avg when startKm changes, and endKm hasn't yet
+    if ($touched.startKm && !$touched.endKm) {
+      setFields((fields) => ({
+        ...fields,
+        endKm: fields.startKm + ($modeOrAvgDistance.data || 1),
+      }));
+    }
+
+    hasSeenModeOrAvgUsageMessage = $touched.endKm;
+  }
 </script>
 
 <h2 class="mt-4 font-['Anton'] text-3xl">Nieuwe rit</h2>
@@ -94,6 +111,11 @@
       name="endKm"
       id="endKm"
     />
+    {#if !hasSeenModeOrAvgUsageMessage}
+      <p class="mt-0.5 font-['Pangolin'] text-sm italic">
+        Automatisch ingevuld op basis van je meest gebruikte rit of gemiddelde rit.
+      </p>
+    {/if}
     <ValidationMessage message={errors.endKm} />
   </div>
 

@@ -1,5 +1,6 @@
 import { zCreateTrip } from '$lib/schemas/trip';
 import { protectedProcedure, router } from '$lib/trpc/router';
+import { modeOrAverage } from '$lib/util/math';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
@@ -83,5 +84,20 @@ export const tripsRouter = router({
         }))
         .sort((a, b) => a.startKm - b.startKm),
     });
+  }),
+  modeOrAvgDistance: protectedProcedure.query(async ({ ctx }) => {
+    const trips = await ctx.prisma.trip.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+      orderBy: {
+        date: 'desc',
+      },
+      take: 10,
+    });
+
+    const distances = trips.map((trip) => trip.endKm - trip.startKm);
+
+    return modeOrAverage(distances);
   }),
 });
