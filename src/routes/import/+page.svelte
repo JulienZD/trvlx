@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { zCreateTrip, type CreateTrip } from '$lib/schemas/trip';
+  import { zCreateTrip, type CreateTrip, type TripCsv } from '$lib/schemas/trip';
   import { trpc } from '$lib/trpc/client';
   import { toastStore } from '@skeletonlabs/skeleton';
   import { parse as parseCsv } from 'papaparse';
@@ -25,7 +25,7 @@
     start: 'startKm',
     end: 'endKm',
     private: 'isPrivate',
-  } satisfies Record<string, keyof CreateTrip>;
+  } satisfies Record<keyof TripCsv, keyof CreateTrip>;
 
   const parseCsvFileToTrips = async (file: File) => {
     return new Promise<CreateTrip[]>((resolve, reject) => {

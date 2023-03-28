@@ -1,4 +1,4 @@
-import { zCreateTrip } from '$lib/schemas/trip';
+import { zCreateTrip, type TripCsv } from '$lib/schemas/trip';
 import { protectedProcedure, router } from '$lib/trpc/router';
 import { modeOrAverage } from '$lib/util/math';
 import { TRPCError } from '@trpc/server';
@@ -84,6 +84,34 @@ export const tripsRouter = router({
         }))
         .sort((a, b) => a.startKm - b.startKm),
     });
+  }),
+  export: protectedProcedure.mutation(async ({ ctx }) => {
+    const trips = await ctx.prisma.trip.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+      orderBy: {
+        date: 'desc',
+      },
+    });
+
+    return trips
+      .map(
+        (trip): TripCsv => ({
+          date: trip.date.toISOString().split('T')[0] as string,
+          start: trip.startKm,
+          end: trip.endKm,
+          private: trip.isPrivate,
+        })
+      )
+      .sort((a, b) => {
+        // sort by date asc, then start asc
+        if (a.date === b.date) {
+          return a.start - b.start;
+        }
+
+        return a.date.localeCompare(b.date);
+      });
   }),
   modeOrAvgDistance: protectedProcedure.query(async ({ ctx }) => {
     const trips = await ctx.prisma.trip.findMany({
