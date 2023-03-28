@@ -57,4 +57,24 @@ export const tripsRouter = router({
       return a.date.getTime() > b.date.getTime() ? -1 : 1;
     });
   }),
+  import: protectedProcedure.input(zCreateTrip.array()).mutation(async ({ ctx, input }) => {
+    const trips = await ctx.prisma.trip.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+    });
+
+    const tripsToCreate = input.filter((trip) => {
+      return !trips.some((t) => t.date.getTime() === new Date(trip.date).getTime());
+    });
+
+    return ctx.prisma.trip.createMany({
+      data: tripsToCreate
+        .map((trip) => ({
+          ...trip,
+          userId: ctx.session.user.id,
+        }))
+        .sort((a, b) => a.startKm - b.startKm),
+    });
+  }),
 });

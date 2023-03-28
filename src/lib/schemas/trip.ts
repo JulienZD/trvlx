@@ -30,3 +30,5 @@ export const zCreateTrip = z
       });
     }
   });
+
+export type CreateTrip = z.infer<typeof zCreateTrip>;
