@@ -2,13 +2,23 @@
   import { page } from '$app/stores';
   import { zCreateTrip, type CreateTrip } from '$lib/schemas/trip';
   import { trpc } from '$lib/trpc/client';
+  import { toastStore } from '@skeletonlabs/skeleton';
   import { parse as parseCsv } from 'papaparse';
 
   let file: File | undefined;
 
   let error = '';
 
-  const importMutation = trpc($page).trips.import.createMutation();
+  const importMutation = trpc($page).trips.import.createMutation({
+    onSuccess: () => {
+      toastStore.trigger({
+        message: 'Import succesvol!',
+        background: 'variant-outline bg-white ring-slate-300',
+        classes: "font-['Pangolin']",
+        timeout: 3500,
+      });
+    },
+  });
 
   const HEADER_REMAP = {
     date: 'date',
@@ -59,7 +69,7 @@
 
             return reject(new Error(`Ontbrekende velden in CSV: ${missingFieldsInCsv.join(', ')}`));
           }
-          
+
           const parseResult = zCreateTrip.array().safeParse(data);
           if (!parseResult.success) {
             return reject(new Error(parseResult.error.message));
@@ -118,7 +128,15 @@
   <p class="text-error-500">{error}</p>
 {/if}
 
+{#if $importMutation.isSuccess}
+  <p class="text-success-700">Import succesvol!</p>
+{/if}
+
 <form on:submit|preventDefault={onImportConfirm}>
   <input type="file" accept=".csv" on:change={onFileSelect} />
-  <button type="submit">Import</button>
+  <button
+    type="submit"
+    class="rounded-md border border-black bg-gray-300 px-2 py-1"
+    disabled={$importMutation.isLoading || $importMutation.isSuccess}>Importeer</button
+  >
 </form>
