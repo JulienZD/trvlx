@@ -54,7 +54,7 @@ export const tripsRouter = router({
       if (a.date.getTime() === b.date.getTime()) {
         return b.startKm - a.startKm;
       }
-      return a.date.getTime() > b.date.getTime() ? 1 : -1;
+      return a.date.getTime() > b.date.getTime() ? -1 : 1;
     });
   }),
 });
